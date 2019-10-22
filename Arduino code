@@ -1,0 +1,126 @@
+const int trigPin = 9;
+
+const int echoPin = 10;
+
+long duration;
+
+int distance,d1,d2,spee;
+
+int enable2 = 12;
+
+int motorPin1 = 6;
+
+int motorPin2 = 7;
+
+
+int dis()
+
+{
+
+digitalWrite(trigPin, LOW);
+
+     delayMicroseconds(2);
+
+
+ // Sets the trigPin on HIGH state for 10 micro seconds
+
+     digitalWrite(trigPin, HIGH);
+
+     delayMicroseconds(10);
+
+     digitalWrite(trigPin, LOW);
+
+
+ // Reads the echoPin, returns the sound wave travel time in microseconds
+
+     duration = pulseIn(echoPin, HIGH);
+
+
+ // Calculating the distance
+
+     distance= duration*0.034/2;
+
+ // Prints the distance on the Serial Monitor
+
+     Serial.print("Distance: ");
+
+     Serial.println(distance);
+
+     return distance;
+
+}
+
+
+
+void setup() 
+
+{
+
+pinMode(trigPin, OUTPUT);
+
+pinMode(echoPin, INPUT);
+
+pinMode(LED_BUILTIN, OUTPUT);
+
+Serial.begin(9600);
+
+
+ // Set the pin modes of the above IO pins to OUTPUT
+
+pinMode(motorPin1, OUTPUT);
+
+pinMode(motorPin2, OUTPUT);
+
+pinMode(enable2, OUTPUT);
+
+}
+
+
+void loop() 
+
+{
+
+     d1=dis();
+
+     delay(1000);
+
+     d2=dis();
+
+     spee=d1-d2;
+
+     Serial.print("Speed: ");
+
+     Serial.println(spee);
+
+      digitalWrite(LED_BUILTIN, HIGH);
+
+     If(spee>20){
+
+      digitalWrite(LED_BUILTIN, HIGH);
+
+
+  // Turn the motor in one direction
+
+      analogWrite(enable2, 50); 
+
+      digitalWrite(motorPin1, LOW);
+
+      digitalWrite(motorPin2, HIGH);
+
+      delay(500);
+
+digitalWrite(motorPin1, HIGH);
+
+digitalWrite(motorPin2, LOW);
+
+delay(500);   
+
+}
+
+else
+
+         digitalWrite(LED_BUILTIN,LOW);
+
+           digitalWrite(motorPin2, LOW);
+
+}
